@@ -1,0 +1,6 @@
+select video_id,count(distinct name) as no_of_unique_users 
+from
+(select *, concat(user_firstname,' ',user_lastname) as name
+from user_flags
+where flag_id is not null) as cte
+group by video_id
