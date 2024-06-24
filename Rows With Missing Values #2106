@@ -1,0 +1,5 @@
+select * from user_flags
+where (case when user_lastname is null then 1 else 0 end) +
+      (case when user_firstname is null then 1 else 0 end) +
+      (case when video_id is null then 1 else 0 end) +
+      (case when flag_id is null then 1 else 0 end) >1
