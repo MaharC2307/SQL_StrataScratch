@@ -1,0 +1,9 @@
+with final_rank as 
+(select *, dense_rank() over(order by distinct_flagged_videos desc) from 
+(select full_name,count(distinct video_id) as distinct_flagged_videos from
+(select *, concat(user_firstname, ' ' , user_lastname) as full_name
+from user_flags
+where flag_id is not null) as cte
+group by full_name) as cte1)
+select full_name from final_rank
+where dense_rank = 1 
