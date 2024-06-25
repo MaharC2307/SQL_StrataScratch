@@ -1,0 +1,11 @@
+with cte as(select user1,sum(msg_count) as s1 from fb_messages
+group by user1
+union
+select user2,sum(msg_count) as s1 from fb_messages
+group by user2),
+cte1 as
+(select user1,sum(s1) as s2 from cte
+group by user1)
+select user1 as username, s2 as total_messages from
+(select *,row_number() over(order by s2 desc) from cte1) as final
+where row_number <=10
