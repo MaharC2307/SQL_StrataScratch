@@ -1,0 +1,16 @@
+with avg_amnt as(select location, avg(amt) as avg_transaction_amt
+from signups s
+join transactions t
+on s.signup_id = t.signup_id
+group by location
+),
+cte as
+(select location, avg(signup_stop_date-signup_start_date) as avg_duration
+from signups
+group by location)
+select c.location,avg_duration,avg_transaction_amt,
+avg_transaction_amt/avg_duration as ratio
+from cte c 
+join avg_amnt a
+on a.location = c.location
+order by avg_transaction_amt/avg_duration desc
