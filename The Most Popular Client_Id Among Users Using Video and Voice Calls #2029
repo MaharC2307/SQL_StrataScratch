@@ -1,0 +1,11 @@
+with total_c as (select client_id, count(distinct user_id) as total_count
+from fact_events
+group by client_id),
+required_c as
+(select client_id,count(distinct user_id) as required_count from fact_events
+where event_type in ( 'video call received', 'video call sent', 'voice call received', 'voice call sent')
+group by client_id)
+select tc.client_id  from total_c tc 
+join required_c as rc
+on tc.client_id = rc.client_id
+where required_count*100/total_count >= 50
