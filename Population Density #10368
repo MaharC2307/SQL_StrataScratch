@@ -1,0 +1,9 @@
+with density_DF as (select *,population/area as density from cities_population
+where area != 0)
+(select city,country,density from density_DF
+order by density
+limit 1)
+union 
+(select city,country,density from density_DF
+order by density desc
+limit 1)
