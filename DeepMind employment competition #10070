@@ -1,0 +1,5 @@
+select team_id,avg(member_score) as avg_team_score from google_competition_participants gcp
+join google_competition_scores gcs
+on gcp.member_id = gcs.member_id
+group by team_id
+order by avg(member_score) desc
