@@ -1,0 +1,5 @@
+select country,count(case when designation is null then 1 else null  end) as without_designation,
+count(case when designation is not null then 1 else null end) as with_designation,
+count(*) as total_designation
+from winemag_p2
+group by country
