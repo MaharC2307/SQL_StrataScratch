@@ -1,4 +1,4 @@
-select *, avg(total_purchase) over(order by ym rows between 2 preceding and current row) from 
+select ym as date, avg(total_purchase) over(order by ym rows between 2 preceding and current row) from 
 (select ym, sum(purchase_amt) as total_purchase from 
 (select *,TO_CHAR(created_at, 'YYYY-MM') as ym  from amazon_purchases
 where purchase_amt > 0 ) as cte
