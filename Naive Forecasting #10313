@@ -1,0 +1,12 @@
+with final_DF as (select *,lag(dpd,1) over(order by month) as forecast_dpd from
+(select *, total_distance/total_cost as DPD
+from (select extract(month from request_date) as month,
+sum(distance_to_travel) as total_distance,sum(monetary_cost) as total_cost
+from uber_request_logs
+group by month
+order by month
+) as cte )as cte1)
+select month,
+round(cast(sqrt(avg(power((dpd-forecast_dpd),2)))as numeric),2)
+from final_DF
+group by month
