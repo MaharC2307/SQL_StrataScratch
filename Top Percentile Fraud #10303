@@ -1,0 +1,5 @@
+select policy_num,state,claim_cost,fraud_score from
+(select *, PERCENT_RANK() over(partition by state order by fraud_score ) 
+from fraud_score
+) as cte
+ where percent_rank >= .95 
