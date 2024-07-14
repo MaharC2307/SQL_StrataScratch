@@ -1,0 +1,7 @@
+select usa.trackname,count(distinct usa.date) as no_of_days from spotify_daily_rankings_2017_us usa
+join spotify_worldwide_daily_song_ranking world
+on usa.streams = world.streams
+where usa.position = 1 and world.position = 1 and
+usa.date = world.date
+group by usa.trackname
+order by usa.trackname
