@@ -1,0 +1,13 @@
+with MostOscarPerson as
+(select nominee,count(*) as no_of_wins from oscar_nominees osn
+join nominee_information ni
+on osn.nominee = ni.name
+where winner = TRUE
+group by nominee
+order by count(*) desc, nominee
+limit 1
+)
+select distinct top_genre from oscar_nominees osn
+join nominee_information ni
+on osn.nominee = ni.name
+where name = (select nominee from MostOscarPerson)
