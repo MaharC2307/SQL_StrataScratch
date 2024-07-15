@@ -1,0 +1,7 @@
+with max_invoice as 
+(select *,max(total_invoice) over(partition by month ) as maxim from 
+(select *,extract(month from invoicedate) as month,(unitprice * quantity) as total_invoice
+from online_retail) as cte)
+select month,description,total_invoice from max_invoice
+where total_invoice = maxim
+
