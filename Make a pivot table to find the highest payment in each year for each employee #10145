@@ -1,0 +1,8 @@
+select employeename,
+max(case when year = 2011 then totalpaybenefits else null end) as max_salary_2011,
+max(case when year = 2012 then totalpaybenefits else null end) as max_salary_2012,
+max(case when year = 2013 then totalpaybenefits else null end) as max_salary_2013,
+max(case when year = 2014 then totalpaybenefits else null end) as max_salary_2014
+from sf_public_salaries
+group by employeename
+order by employeename asc
