@@ -1,0 +1,16 @@
+select  profession,
+count(case when birth_month = 1 then employee_id end) as jan,
+count(case when birth_month = 2 then employee_id end) as feb,
+count(case when birth_month = 3 then employee_id end) as mar,
+count(case when birth_month = 4 then employee_id end) as apr,
+count(case when birth_month = 5 then employee_id end) as may,
+count(case when birth_month = 6 then employee_id end) as jun,
+count(case when birth_month = 7 then employee_id end) as jul,
+count(case when birth_month = 8 then employee_id end) as aug,
+count(case when birth_month = 9 then employee_id end) as sep,
+count(case when birth_month = 10 then employee_id end) as oct,
+count(case when birth_month = 11 then employee_id end) as nov,
+count(case when birth_month = 12 then employee_id end) as dec
+from employee_list
+group by profession
+order by profession
