@@ -1,0 +1,9 @@
+with df as (select date,sum(value) as current_revenue
+from
+(select *, to_char(created_at,'yyyy-mm') as date from sf_transactions
+) as cte
+group by date
+order by date)
+select date,
+round(((current_revenue-lag(current_revenue,1) over())/lag(current_revenue,1) over())*100,2) as per_change
+from df
