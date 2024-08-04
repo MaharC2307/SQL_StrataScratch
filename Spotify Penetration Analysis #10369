@@ -1,0 +1,13 @@
+with active_users as (select country,count(user_id) as actv_users from penetration_analysis
+where '2024-01-31'::date - last_active_date <= 30 and
+       sessions >= 5 and listening_hours >= 10
+       group by country
+), total_users as
+(select country,count(user_id) as tot_users from penetration_analysis
+group by country)
+select a.country,
+round(cast(actv_users::float/tot_users as numeric),2) as penetration_rate
+from active_users a
+join total_users t
+on a.country = t.country
+
