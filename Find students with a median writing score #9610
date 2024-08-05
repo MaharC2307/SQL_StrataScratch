@@ -1,0 +1,6 @@
+with med_score as
+(select  percentile_cont(0.5) within group (order by sat_writing)
+from sat_scores
+)
+select id from sat_scores
+where sat_writing = (select * from med_score)
