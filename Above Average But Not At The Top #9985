@@ -1,0 +1,10 @@
+with avg_pay as (select jobtitle,avg(totalpay) as avg_salary from sf_public_salaries where year = 2013
+group by jobtitle),
+cte as
+(select *,rank() over(partition by sp.jobtitle order by totalpay desc)
+from sf_public_salaries sp
+join avg_pay ap
+on sp.jobtitle = ap.jobtitle
+where year = 2013)
+select employeename from cte
+where totalpay > avg_salary and rank > 5
