@@ -1,0 +1,5 @@
+with cte as(select * , rank() over(partition by jobtitle order by totalpaybenefits desc) 
+from sf_public_salaries
+)
+select jobtitle,totalpaybenefits from cte
+where rank < 3
