@@ -1,0 +1,7 @@
+with cte as(select distinct name from olympics_athletes_events
+where year = 1992 and sport like '%Alpine%' and noc = 'NOR')
+select distinct name from cte
+where cte.name not in (select distinct name from olympics_athletes_events
+where year = 1994 ) 
+
+
