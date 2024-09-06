@@ -1,0 +1,15 @@
+select medal,
+sum(case when year = 2000 then c else 0 end) as y2000_medal,
+sum(case when year = 2004 then c else 0 end) as y2004_medal,
+sum(case when year = 2008 then c else 0 end) as y2008_medal,
+sum(case when year = 2012 then c else 0 end) as y2012_medal,
+sum(case when year = 2016 then c else 0 end) as y2016_medal,
+sum(c) as total_medals
+from
+(select year,medal,count(*) as c from olympics_athletes_events
+where team = 'China'
+group by year,medal
+having medal is not null and 
+year in (2000,2004,2008,2012,2016)
+) as cte
+group by medal
