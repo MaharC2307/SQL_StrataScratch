@@ -1,0 +1,9 @@
+select *, ( case WHEN female_count = 0 THEN 'NULL' 
+else cast(cast(men_count as float)/cast(female_count as float) as varchar) end ) as ratio
+from 
+(select games,count(case when sex = 'M' then 1 else null end) as men_count,
+count(case when sex = 'F' then 1 else null end) as female_count 
+from olympics_athletes_events
+group by games
+order by games
+) as cte
