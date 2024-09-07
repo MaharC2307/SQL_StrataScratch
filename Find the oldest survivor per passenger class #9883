@@ -1,0 +1,6 @@
+with cte as(select pclass,max(age) as max_age from titanic
+group by pclass)
+select name,age,t.pclass from titanic t
+join cte c
+on t.age = c.max_age 
+order by t.pclass asc
