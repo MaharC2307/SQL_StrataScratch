@@ -1,0 +1,6 @@
+with cte as(select from_user, count(*) as no_of_emails 
+from google_gmail_emails
+group by from_user)
+select *,
+row_number() over(order by no_of_emails desc,from_user asc)
+from cte
