@@ -1,0 +1,10 @@
+select channel_name, post_id, created_at, likes 
+from
+(select * ,
+rank() over(partition by channel_name order by likes desc)
+from posts p
+join channels c
+on p.channel_id = c.channel_id
+where likes != 0)
+as cte
+where rank <=3
