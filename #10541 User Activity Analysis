@@ -1,0 +1,8 @@
+select up.user_id,signup_date,count(distinct activity_type)
+from user_profiles up
+join
+user_activities ua
+on up.user_id = ua.user_id
+where signup_date < activity_date and
+activity_date - signup_date <= 30
+group by up.user_id,signup_date
