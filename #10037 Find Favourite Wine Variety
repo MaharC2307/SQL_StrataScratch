@@ -1,0 +1,10 @@
+with ranked_cte as(select *, rank() over(partition by taster_name order by count desc)
+from
+(select taster_name,variety, count(variety)
+from winemag_p2
+where taster_name is not null
+group by taster_name,variety
+) as cte)
+
+select taster_name,variety from ranked_cte
+where rank = 1
