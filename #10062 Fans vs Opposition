@@ -1,0 +1,9 @@
+with pop_desc as(select *, row_number() over(order by popularity asc,employee_id asc) as rank_desc
+from facebook_hack_survey),
+pop_asc as (select *, row_number() over(order by popularity desc,employee_id desc) as rank_asc
+from facebook_hack_survey
+)
+select '(' || pd.employee_id || ',' || pa.employee_id || ')' from pop_desc pd
+join pop_asc pa
+on pd.rank_desc = rank_asc
+order by pd.popularity asc
