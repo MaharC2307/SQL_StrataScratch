@@ -1,0 +1,10 @@
+with cte as(select s.area_name, 
+s.area_size, 
+count(distinct customer_id) as no_of_uniq_cust
+from transaction_records tr
+join stores s
+on tr.store_id = s.store_id
+group by s.area_name, s.area_size)
+
+select area_name, (no_of_uniq_cust/cast(area_size as float)) as customer_density
+from cte
