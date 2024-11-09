@@ -1,0 +1,17 @@
+with user_action as(select au.user_id, sum(num_actions) as no_of_actions
+from asana_users au
+join asana_actions aa
+on au.user_id = aa.user_id
+where company = 'ClassPass' and
+extract(year from date) = 2022 and
+extract(month from date) = 01 and
+action_name = 'CompleteTask'
+group by au.user_id),
+
+ClassPass_cte as
+(select distinct user_id as ClassPass_Employee from asana_users
+where company = 'ClassPass')
+
+select classpass_employee, coalesce(no_of_actions,0) from ClassPass_cte cc
+left join user_action ua
+on cc.classpass_employee = ua.user_id
