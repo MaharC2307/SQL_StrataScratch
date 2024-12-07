@@ -1,0 +1,12 @@
+with cte as((select *,
+rank() over(order by totalpay desc) as rankd
+from sf_public_salaries)
+union all
+(select *,
+rank() over(order by totalpay asc) as rankd
+from sf_public_salaries
+))
+
+select employeename, totalpay
+from cte where rankd = 1
+order by totalpay desc
