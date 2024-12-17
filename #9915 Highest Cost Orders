@@ -1,0 +1,14 @@
+with cte as
+(select first_name, order_date, sum(total_order_cost) as total_order_cost
+from customers c
+join orders o
+on c.id = o.cust_id
+where order_date between '2019-02-01' and '2019-05-01'
+group by first_name, order_date)
+
+select first_name, order_date, total_order_cost
+from
+(select *, rank() over(order by total_order_cost desc) rank_d
+from cte) 
+as final_cte
+where rank_d = 1
