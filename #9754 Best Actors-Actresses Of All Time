@@ -1,0 +1,6 @@
+select nominee,count(*) as no_of_oscars from
+(select * from oscar_nominees
+where winner = TRUE)
+as cte
+group by nominee
+order by count(*) desc
