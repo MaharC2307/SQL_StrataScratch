@@ -1,0 +1,8 @@
+select nominee, count(*) as unsucessfull_nominee_count
+from oscar_nominees
+where nominee not in
+(select nominee from 
+oscar_nominees
+where winner = True)
+group by nominee
+order by count(*) desc
