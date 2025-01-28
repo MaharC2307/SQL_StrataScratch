@@ -1,0 +1,14 @@
+select empl_id,no_of_cust
+from
+(
+select *, dense_rank() over(order by no_of_cust desc) as rankd  
+from
+(select empl_id,count(*) as no_of_cust
+from map_employee_territory e
+join map_customer_territory c
+on e.territory_id = c.territory_id
+group by empl_id 
+order by count(*) desc)
+as cte
+) as cte1
+where rankd = 1
