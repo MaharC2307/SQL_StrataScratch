@@ -1,0 +1,8 @@
+select worker_id, salary, department 
+from
+(
+select *, row_number() over(order by salary desc) as rankd
+from worker
+)  
+as cte
+where rankd <=10
