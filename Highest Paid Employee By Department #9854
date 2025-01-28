@@ -1,0 +1,9 @@
+select department, worker_id, salary 
+from
+(
+select *,
+dense_rank() over(partition by department order by salary desc) as rankd
+from worker
+)
+as cte
+where rankd = 1
