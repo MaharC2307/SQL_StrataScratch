@@ -1,0 +1,8 @@
+    select m.empl_id, m.salary as manager_salary, avg(e.salary) as emp_salary
+    from map_employee_hierarchy h
+    join dim_employee e
+    on h.empl_id = e.empl_id
+    join dim_employee m
+    on h.manager_empl_id = m.empl_id
+    group by m.empl_id,m.salary
+    having m.salary < 2*avg(e.salary) ;
